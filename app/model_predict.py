@@ -2,9 +2,8 @@
 import requests
 
 
-def tree_count(place, year):
+def tree_count(town, year):
     """Parser for OSM."""
-    town = place.split(", ")[0]
     url = r"http://overpass-api.de/api/interpreter"
     query = f"""[out:json][date:'{year}-01-01T00:00:00Z'][maxsize:2000000000];
     area["name:en"="{town}"]->.searchArea;

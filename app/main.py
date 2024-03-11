@@ -4,7 +4,6 @@ from typing import Any
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI
-from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from . import models, schemas
@@ -27,7 +26,7 @@ def get_db():
 @app.get("/")
 async def root():
     """Hello message."""
-    return {"message": "Hello!This is an information application about trees."}
+    return {"message": "Hello! This is an information application about trees."}
 
 
 @app.post("/information")
@@ -36,25 +35,14 @@ async def post_information(
 ) -> int | Any:
     """Get info."""
     load_dotenv()
-    info = tree_count(buff.place, buff.year)
+    info = tree_count(buff.city, buff.year)
     new_detect = models.Trees(
-        place=buff.place,
-        year=buff.year,
-        amount=info,
+        city=buff.city,
+        country=buff.country,
+        year=int(buff.year),
+        trees_count=info,
         request_time=datetime.now(),
     )
     db.add(new_detect)
     db.commit()
     return info
-
-
-@app.get("/get_most_popular")
-async def get_most_popular(db: Session = Depends(get_db)):
-    """Get most popular place."""
-    return (
-        db.query(models.Trees)  # type: ignore
-        .group_by(models.Trees.place)
-        .order_by(func.count(models.Trees.place).desc())  # pylint: disable=E1102
-        .first()
-        .place
-    )

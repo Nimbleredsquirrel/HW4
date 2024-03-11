@@ -10,5 +10,6 @@ load_dotenv()
 class InputFeatures(BaseModel):
     """Input features."""
 
-    place: str = ""
+    city: str = ""
+    country: str = ""
     year: str = ""

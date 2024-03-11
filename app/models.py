@@ -11,7 +11,8 @@ class Trees(Base):  # pylint: disable=R0903
     __tablename__ = "Trees"
 
     id = Column(Integer, primary_key=True)
-    place = Column(String, default="")
-    year = Column(String, default="")
-    amount = Column(String, default="")
+    city = Column(String, default="")
+    country = Column(String, default="")
+    year = Column(Integer, default=2000)
+    trees_count = Column(Integer, default=0)
     request_time = Column(DateTime)
