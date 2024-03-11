@@ -1,21 +1,16 @@
+version: "3.3"
+
 services:
   postgres:
-    image: postgres:13.3
+    build:
+      context: .
+      dockerfile: pg.Dockerfile
+    volumes:
+      - pgdata:/var/lib/postgresql/data/pgdata
     environment:
-      POSTGRES_DB: "habrdb"
-      POSTGRES_USER: "habrpguser"
-      POSTGRES_PASSWORD: "pgpwd4habr"
-    ports:
-      - "5432:5432"
-  wordpress:
-    image: wordpress:latest
-    ports:
-      - 80:80
-    restart: always
-    environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
-volumes:
-  db_data:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+  app:
+    build:
+      context: .
+      dockerfile: app.Dockerfile
