@@ -5,7 +5,7 @@ import requests
 def tree_count(town, year):
     """Parser for OSM."""
     url = r"http://overpass-api.de/api/interpreter"
-    query = f"""[out:json][date:'{year}-01-01T00:00:00Z'][maxsize:2000000000];
+    query = f"""[out:json][date:'{str(year)}-01-01T00:00:00Z'][maxsize:2000000000];
     area["name:en"="{town}"]->.searchArea;
     (node["natural"="tree"](area.searchArea);); out count;"""
     result = requests.post(url, data=query, timeout=60)
