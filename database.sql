@@ -1,4 +1,4 @@
-CREATE TABLE requests_log (
+CREATE TABLE post_information (
     id SERIAL PRIMARY KEY,
     city VARCHAR(255),
     country VARCHAR(255),
@@ -9,7 +9,7 @@ CREATE TABLE requests_log (
 CREATE OR REPLACE FUNCTION most_frequent_city() RETURNS TABLE(city VARCHAR, queries_count INT) AS $$ BEGIN RETURN QUERY
 SELECT city,
     COUNT(*) as queries_count
-FROM requests_log
+FROM post_information
 GROUP BY city
 ORDER BY queries_count DESC
 LIMIT 1;
